@@ -1,5 +1,7 @@
 import styled from "styled-components";
 import { Routes } from "@config/routes";
+import { useState } from "react";
+import Modal from "../features/ui/modal/modal";
 
 const Header = styled.header`
   width: 100%;
@@ -12,6 +14,30 @@ const Header = styled.header`
   background: white;
 `;
 
+const Nav = styled.nav`
+  display: flex;
+  gap: 2rem;
+
+  & > a {
+    text-decoration: none;
+    color: gray;
+    font-weight: 500;
+  }
+`;
+
+const DashboardButton = styled.button`
+  background-color: #7f56d9;
+  color: white;
+  width: 10rem;
+  height: 2.5rem;
+  border-radius: 10px;
+
+  & > a {
+    text-decoration: none;
+    color: white;
+    font-weight: 500;
+  }
+`;
 const ContactButton = styled.button`
   position: absolute;
   bottom: 2.5rem;
@@ -29,23 +55,32 @@ const ContactButton = styled.button`
 `;
 
 const IssuesPage = () => {
+  const [toggle, setToggle] = useState(false);
+
+  const toggleModal = () => {
+    setToggle(() => !toggle);
+  };
+
   return (
     <div>
       <Header>
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img src="/icons/logo-large.svg" alt="Prolog logo" />
-        <a href={Routes.projects}>Dashboard</a>
+        <Nav>
+          <a href={Routes.home}>Home</a>
+          <a href={Routes.products}>Products</a>
+          <a href={Routes.documentation}>Documentation</a>
+          <a href={Routes.pricing}>Pricing</a>
+        </Nav>
+        <DashboardButton type="button">
+          <a href={Routes.projects}>Open Dashboard</a>
+        </DashboardButton>
       </Header>
-      <ContactButton
-        onClick={() =>
-          alert(
-            "Implement this in Challenge 2 - Modal:\n\nhttps://profy.dev/rjs-challenge-modal"
-          )
-        }
-      >
+      <ContactButton onClick={toggleModal}>
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img src="/icons/message.svg" alt="Contact" />
       </ContactButton>
+      {toggle && <Modal />}
     </div>
   );
 };
