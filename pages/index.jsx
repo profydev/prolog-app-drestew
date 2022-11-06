@@ -45,7 +45,7 @@ const ContactButton = styled.button`
   padding: 1rem;
   background: #7f56d9;
   border-radius: 50%;
-  box-shadow: 0px 1px 2px rgba(16, 24, 40, 0.05);
+  box-shadow: 0 1px 2px rgba(16, 24, 40, 0.05);
   border: none;
   cursor: pointer;
 
@@ -80,7 +80,7 @@ const IssuesPage = () => {
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img src="/icons/message.svg" alt="Contact" />
       </ContactButton>
-      {toggle && <Modal />}
+      {toggle && <Modal toggleModal={toggleModal} />}
     </div>
   );
 };
