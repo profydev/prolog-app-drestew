@@ -2,6 +2,44 @@ import styled from "styled-components";
 import { Routes } from "@config/routes";
 import { useState } from "react";
 import Modal from "../features/ui/modal/modal";
+// import Hero from '../features/ui/hero/hero'
+import Image from "next/image";
+
+// interface content {
+//   meta: {
+//     title: string
+//     description: string
+//     image: string
+//   }
+//
+//   sections: Array<{
+//     sectionType: string
+//     theme: string
+//     title: string
+//     subtitle: string
+//     img?: {
+//       src: string
+//       width: number
+//       height: number
+//     }
+//     companies?: Array<{
+//       name: string
+//       logo: string
+//     }>
+//     testimonials?: Array<{
+//       "title": "string",
+//       "text": "string",
+//       "userName": "string",
+//       "userRole": "string",
+//       "userCompany": "string",
+//       "userImage": {
+//         "src": "string",
+//         "width": 0,
+//         "height": 0
+//       }
+//     }>
+//   }>
+// }
 
 const Header = styled.header`
   width: 100%;
@@ -54,8 +92,30 @@ const ContactButton = styled.button`
   }
 `;
 
-const IssuesPage = () => {
+const Hero = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+`;
+
+export async function getStaticProps() {
+  const resp = await fetch("https://prolog-api.profy.dev/content-page");
+  const hero = await resp.json();
+
+  return {
+    props: {
+      hero,
+    },
+  };
+}
+
+const IssuesPage = ({ hero }) => {
   const [toggle, setToggle] = useState(false);
+
+  const title = hero[0].sections[0].title;
+  const subtitle = hero[0].sections[0].subtitle;
+  const image = hero[0].sections[0].image;
 
   const toggleModal = () => {
     setToggle(() => !toggle);
@@ -76,6 +136,11 @@ const IssuesPage = () => {
           <a href={Routes.projects}>Open Dashboard</a>
         </DashboardButton>
       </Header>
+      <Hero>
+        <h1>{title}</h1>
+        <p>{subtitle}</p>
+      </Hero>
+      <Image src={image.src} alt="Laptop" width={1200} height={400} />
       <ContactButton onClick={toggleModal}>
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img src="/icons/message.svg" alt="Contact" />
