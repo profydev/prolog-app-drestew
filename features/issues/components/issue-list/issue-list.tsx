@@ -53,7 +53,7 @@ const PaginationButton = styled.button`
 `;
 
 const PageInfo = styled.div`
-  color: ${color("gray", 300)};
+  color: #344054;
   ${textFont("sm", "regular")}
 `;
 
