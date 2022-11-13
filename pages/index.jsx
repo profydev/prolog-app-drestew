@@ -2,49 +2,12 @@ import styled from "styled-components";
 import { Routes } from "@config/routes";
 import { useState } from "react";
 import Modal from "../features/ui/modal/modal";
-// import Hero from '../features/ui/hero/hero'
 import Image from "next/image";
-
-// interface content {
-//   meta: {
-//     title: string
-//     description: string
-//     image: string
-//   }
-//
-//   sections: Array<{
-//     sectionType: string
-//     theme: string
-//     title: string
-//     subtitle: string
-//     img?: {
-//       src: string
-//       width: number
-//       height: number
-//     }
-//     companies?: Array<{
-//       name: string
-//       logo: string
-//     }>
-//     testimonials?: Array<{
-//       "title": "string",
-//       "text": "string",
-//       "userName": "string",
-//       "userRole": "string",
-//       "userCompany": "string",
-//       "userImage": {
-//         "src": "string",
-//         "width": 0,
-//         "height": 0
-//       }
-//     }>
-//   }>
-// }
 
 const Header = styled.header`
   width: 100%;
   height: 80px;
-  padding: 0 2rem;
+  padding: 0 5.2rem 0 2rem;
   box-sizing: border-box;
   display: flex;
   justify-content: space-between;
@@ -54,21 +17,24 @@ const Header = styled.header`
 
 const Nav = styled.nav`
   display: flex;
-  gap: 2rem;
+  margin-right: 0.5rem;
+  padding-left: 3.4rem;
 
   & > a {
     text-decoration: none;
     color: gray;
     font-weight: 500;
+    margin: 1rem;
   }
 `;
 
 const DashboardButton = styled.button`
   background-color: #7f56d9;
+  border: solid 1px #7f56d9;
   color: white;
-  width: 10rem;
+  width: 10.2rem;
   height: 2.5rem;
-  border-radius: 10px;
+  border-radius: 5px;
 
   & > a {
     text-decoration: none;
