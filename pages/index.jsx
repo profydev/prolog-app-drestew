@@ -13,6 +13,8 @@ const Header = styled.header`
   justify-content: space-between;
   align-items: center;
   background: white;
+  margin-bottom: 5rem;
+  filter: ${({ modalOpen }) => (modalOpen ? "blur(0.3rem)" : "none")};
 `;
 
 const Nav = styled.nav`
@@ -63,6 +65,22 @@ const Hero = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  filter: ${({ modalOpen }) => (modalOpen ? "blur(0.3rem)" : "none")};
+
+  & > h1 {
+    font-weight: 900;
+    font-size: xxx-large;
+    margin-top: 0;
+  }
+
+  & > p {
+    margin: 0 0 2rem 0;
+    padding: 0 15rem;
+    text-align: center;
+    font-size: x-large;
+    font-weight: 500;
+    color: gray;
+  }
 `;
 
 export async function getStaticProps() {
@@ -77,19 +95,19 @@ export async function getStaticProps() {
 }
 
 const IssuesPage = ({ hero }) => {
-  const [toggle, setToggle] = useState(false);
+  const [modal, setModal] = useState(false);
 
   const title = hero[0].sections[0].title;
   const subtitle = hero[0].sections[0].subtitle;
   const image = hero[0].sections[0].image;
 
   const toggleModal = () => {
-    setToggle(() => !toggle);
+    setModal(() => !modal);
   };
 
   return (
     <div>
-      <Header>
+      <Header modalOpen={modal}>
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img src="/icons/logo-large.svg" alt="Prolog logo" />
         <Nav>
@@ -102,16 +120,16 @@ const IssuesPage = ({ hero }) => {
           <a href={Routes.projects}>Open Dashboard</a>
         </DashboardButton>
       </Header>
-      <Hero>
+      <Hero modalOpen={modal}>
         <h1>{title}</h1>
         <p>{subtitle}</p>
+        <Image src={image.src} alt="Laptop" width={1200} height={400} />
       </Hero>
-      <Image src={image.src} alt="Laptop" width={1200} height={400} />
       <ContactButton onClick={toggleModal}>
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img src="/icons/message.svg" alt="Contact" />
       </ContactButton>
-      {toggle && <Modal toggleModal={toggleModal} />}
+      {modal && <Modal toggleModal={toggleModal} />}
     </div>
   );
 };
