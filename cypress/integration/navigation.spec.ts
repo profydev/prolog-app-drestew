@@ -2,7 +2,7 @@ describe("Sidebar Navigation", () => {
   beforeEach(() => {
     cy.visit("http://localhost:3000/dashboard");
   });
-
+  //
   context("desktop resolution", () => {
     beforeEach(() => {
       cy.viewport(1025, 900);
@@ -36,6 +36,18 @@ describe("Sidebar Navigation", () => {
 
       // check that text is not rendered
       cy.get("nav").contains("Issues").should("not.exist");
+    });
+
+    it("opens email client", () => {
+      // keep click from opening new tab (from window.open)
+      cy.window().then((win) => {
+        cy.stub(win, "open").as("open");
+      });
+      cy.get("nav").contains("Support").click();
+      cy.get("@open").should(
+        "have.been.calledOnceWithExactly",
+        "mailto:support@prolog-app.com?subject=Support%20Request"
+      );
     });
   });
 
