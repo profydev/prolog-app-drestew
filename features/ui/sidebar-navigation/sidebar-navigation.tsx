@@ -74,6 +74,16 @@ const Logo = styled.img`
   @media (min-width: ${breakpoint("desktop")}) {
     margin: ${space(0, 4)};
   }
+
+  @media (max-width: ${breakpoint("desktop")}) {
+    display: none;
+  }
+`;
+
+const LogoMobile = styled.img`
+  @media (min-width: ${breakpoint("desktop")}) {
+    display: none;
+  }
 `;
 
 const MenuButton = styled(Button)`
@@ -170,6 +180,7 @@ export function SidebarNavigation() {
             }
             alt="logo"
           />
+          <LogoMobile src={"/icons/logo-large.svg"} alt="logo" />
           <MenuButton onClick={() => setMobileMenuOpen(!isMobileMenuOpen)}>
             <MenuIcon
               src={isMobileMenuOpen ? "/icons/close.svg" : "/icons/menu.svg"}
