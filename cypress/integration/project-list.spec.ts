@@ -11,6 +11,9 @@ describe("Project List", () => {
     // open projects page
     cy.visit("http://localhost:3000/dashboard");
 
+    // check if project list exists when loading spinner is rendered
+    cy.get("[data-cy='loading-spinner']").siblings("li").should("not.exist");
+
     // wait for request to resolve
     cy.wait("@getProjects");
   });
@@ -36,7 +39,9 @@ describe("Project List", () => {
           cy.wrap($el)
             .find("a")
             .should("have.attr", "href", "/dashboard/issues");
-        });
+        })
+        .siblings("[data-cy='loading-spinner']")
+        .should("not.exist");
     });
   });
 });
