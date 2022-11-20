@@ -20,6 +20,12 @@ const languageNames = {
   [ProjectLanguage.python]: "Python",
 };
 
+const projectStatuses = {
+  [ProjectStatus.info]: "Stable",
+  [ProjectStatus.warning]: "Warning",
+  [ProjectStatus.error]: "Critical",
+};
+
 const statusColors = {
   [ProjectStatus.info]: BadgeColor.success,
   [ProjectStatus.warning]: BadgeColor.warning,
@@ -126,7 +132,9 @@ export function ProjectCard({ project }: ProjectCardProps) {
             <IssuesNumber>{numEvents24h}</IssuesNumber>
           </Issues>
           <Status>
-            <Badge color={statusColors[status]}>{capitalize(status)}</Badge>
+            <Badge color={statusColors[status]}>
+              {projectStatuses[status]}
+            </Badge>
           </Status>
         </InfoContainer>
       </TopContainer>
