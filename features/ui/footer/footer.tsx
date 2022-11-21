@@ -1,5 +1,6 @@
 import styled from "styled-components";
 import { color, breakpoint } from "@styles/theme";
+import { version as appVersion } from "package.json";
 
 const FooterContainer = styled.div`
   display: flex;
@@ -58,7 +59,7 @@ export function Footer() {
   return (
     <FooterContainer>
       <FooterContent>
-        <Version>17.05.04</Version>
+        <Version>{appVersion}</Version>
         <Nav>
           <a href="#">Docs</a>
           <a href="#">API</a>
