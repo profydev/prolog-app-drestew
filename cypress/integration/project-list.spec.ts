@@ -1,5 +1,6 @@
 import capitalize from "lodash/capitalize";
 import mockProjects from "../fixtures/projects.json";
+import { version } from "package.json";
 
 describe("Project List", () => {
   beforeEach(() => {
@@ -21,6 +22,19 @@ describe("Project List", () => {
   context("desktop resolution", () => {
     beforeEach(() => {
       cy.viewport(1025, 900);
+    });
+
+    it("display the footer", () => {
+      cy.get("footer").within(($footer) => {
+        cy.wrap($footer).contains(`${version}`);
+        cy.wrap($footer).contains("Docs");
+        cy.wrap($footer).contains("API");
+        cy.wrap($footer).contains("Help");
+        cy.wrap($footer).contains("Community");
+        cy.wrap($footer)
+          .find("img")
+          .should("have.attr", "src", "/icons/logo-small.svg");
+      });
     });
 
     it("renders the projects", () => {

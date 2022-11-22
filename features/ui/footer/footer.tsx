@@ -1,8 +1,8 @@
 import styled from "styled-components";
 import { color, breakpoint } from "@styles/theme";
-import { version as appVersion } from "package.json";
+import { version } from "package.json";
 
-const FooterContainer = styled.div`
+const FooterContainer = styled.footer`
   display: flex;
   justify-content: center;
   align-items: center;
@@ -59,7 +59,7 @@ export function Footer() {
   return (
     <FooterContainer>
       <FooterContent>
-        <Version>{appVersion}</Version>
+        <Version>{version}</Version>
         <Nav>
           <a href="#">Docs</a>
           <a href="#">API</a>
