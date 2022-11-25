@@ -58,7 +58,7 @@ export function ProjectList() {
           <img src="/icons/error-alert.svg" alt="alert" />
           <p>There was a problem while loading the project data</p>
         </ErrorContent>
-        <ErrorContent>
+        <ErrorContent onClick={useProjects}>
           <p>Try again</p>
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img src="/icons/error-arrow-right.svg" alt="arrow-right" />
