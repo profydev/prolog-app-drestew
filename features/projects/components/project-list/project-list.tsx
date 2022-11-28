@@ -52,7 +52,7 @@ export function ProjectList() {
   if (isError) {
     console.error(error);
     return (
-      <ErrorContainer>
+      <ErrorContainer data-cy="error">
         <ErrorContent>
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img src="/icons/error-alert.svg" alt="alert" />
