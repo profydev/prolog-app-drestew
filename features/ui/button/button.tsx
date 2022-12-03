@@ -14,7 +14,7 @@ export type ButtonIcon = "leading" | "trailing" | "only";
 
 type ButtonProps = {
   children: React.ReactNode;
-  onClick: () => void;
+  onClick?: () => void;
   size?: ButtonSize;
   color?: ButtonColor;
   state?: ButtonState;
@@ -26,7 +26,7 @@ const StyledButton = styled.button<{
   size?: ButtonSize;
   state?: ButtonState;
   icon?: ButtonIcon;
-  onClick: () => void;
+  onClick?: () => void;
   children: React.ReactNode;
 }>`
   cursor: pointer;
