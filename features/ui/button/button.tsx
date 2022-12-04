@@ -1,6 +1,7 @@
 import React from "react";
 import styled, { css } from "styled-components";
 import { color, textFont, space } from "@styles/theme";
+import { aquamarine } from "color-name";
 
 export type ButtonSize = "small" | "medium" | "large" | "xlarge";
 export type ButtonColor =
@@ -18,14 +19,12 @@ type ButtonProps = {
   onClick?: () => void;
   size?: ButtonSize;
   color?: ButtonColor;
-  state?: ButtonState;
   icon?: ButtonIcon;
 };
 
 const StyledButton = styled.button<{
   color?: ButtonColor;
   size?: "small" | "medium" | "large" | "xlarge";
-  state?: ButtonState;
   icon?: ButtonIcon;
   onClick?: () => void;
   children: React.ReactNode;
@@ -112,25 +111,50 @@ const StyledButton = styled.button<{
           background-color: ${color("error", 600)};
         `;
     }
-  }}
+  }}}
+
+  &:hover {
+    ${(props) => {
+      switch (props.color) {
+        case "primary":
+          return css`
+            color: #fff;
+            background-color: ${color("primary", 700)};
+          `;
+        case "secondary":
+          return css`
+            color: ${color("primary", 700)};
+            background-color: ${color("primary", 100)};
+          `;
+        case "gray":
+          return css`
+            color: ${color("gray", 800)};
+            background-color: ${color("gray", 50)};
+            border: solid 1px ${color("gray", 300)};
+          `;
+        case "empty":
+          return css`
+            color: ${color("primary", 700)};
+            background-color: ${color("primary", 50)};
+          `;
+        case "empty gray":
+          return css`
+            color: ${color("gray", 600)};
+            background-color: ${color("gray", 50)};
+          `;
+        case "error":
+          return css`
+            color: #fff;
+            background-color: ${color("error", 700)};
+          `;
+      }
+    }}
+  }
 `;
 
-export function Button({
-  color,
-  size,
-  state,
-  icon,
-  onClick,
-  children,
-}: ButtonProps) {
+export function Button({ color, size, icon, onClick, children }: ButtonProps) {
   return (
-    <StyledButton
-      color={color}
-      size={size}
-      state={state}
-      icon={icon}
-      onClick={onClick}
-    >
+    <StyledButton color={color} size={size} icon={icon} onClick={onClick}>
       {children}
     </StyledButton>
   );
