@@ -30,6 +30,9 @@ const StyledButton = styled.button<{
 }>`
   cursor: pointer;
   border-radius: 8px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 
   // remove default button styles
   border: none;
@@ -111,6 +114,47 @@ const StyledButton = styled.button<{
         `;
     }
   }}}
+
+  ${(props) => {
+    switch (props.icon) {
+      case "leading":
+        return css`
+          &::before {
+            content: "";
+            display: inline-block;
+            width: 1rem;
+            height: 1rem;
+            border-radius: 1rem;
+            border: solid white 1.5px;
+            margin-right: 0.5rem;
+            margin-bottom: 2px;
+          }
+        `;
+      case "trailing":
+        return css`
+          &::after {
+            content: "";
+            display: inline-block;
+            width: 1em;
+            height: 1em;
+            border-radius: 1rem;
+            border: solid white 1.5px;
+            margin-left: 0.5em;
+            margin-bottom: 2px;
+          }
+        `;
+      case "only":
+        return css`
+          &::after {
+            content: "";
+            width: 1em;
+            height: 1em;
+            border-radius: 1rem;
+            border: solid white 1.5px;
+          }
+        `;
+    }
+  }}
 
   &:hover {
     ${(props) => {
@@ -226,7 +270,7 @@ const StyledButton = styled.button<{
 export function Button({ color, size, icon, onClick, children }: ButtonProps) {
   return (
     <StyledButton color={color} size={size} icon={icon} onClick={onClick}>
-      {children}
+      {icon !== "only" && children}
     </StyledButton>
   );
 }
