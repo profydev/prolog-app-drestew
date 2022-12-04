@@ -1,5 +1,6 @@
 import React from "react";
-import styled from "styled-components";
+import styled, { css } from "styled-components";
+import { color, textFont, space } from "@styles/theme";
 
 export type ButtonSize = "small" | "medium" | "large" | "xlarge";
 export type ButtonColor =
@@ -23,13 +24,14 @@ type ButtonProps = {
 
 const StyledButton = styled.button<{
   color?: ButtonColor;
-  size?: ButtonSize;
+  size?: "small" | "medium" | "large" | "xlarge";
   state?: ButtonState;
   icon?: ButtonIcon;
   onClick?: () => void;
   children: React.ReactNode;
 }>`
   cursor: pointer;
+  border-radius: 8px;
 
   // remove default button styles
   border: none;
@@ -45,6 +47,72 @@ const StyledButton = styled.button<{
     border: 0;
     padding: 0;
   }
+
+  ${(props) => {
+    switch (props.size) {
+      case "small":
+        return css`
+          font-size: ${textFont("sm", "medium")};
+          padding: 0.5rem 0.875rem;
+        `;
+      case "medium":
+        return css`
+          font-size: ${textFont("sm", "medium")};
+          padding: 0.625rem 1rem;
+        `;
+      case "large":
+        return css`
+          font-size: ${textFont("md", "regular")};
+          padding: 0.625rem 1.125rem;
+        `;
+      case "xlarge":
+        return css`
+          font-size: ${textFont("md", "medium")};
+          padding: 0.75rem 1.25rem;
+        `;
+      default:
+        return css`
+          font-size: ${textFont("sm", "medium")};
+          padding: 0.625rem 1rem;
+        `;
+    }
+  }}
+
+  ${(props) => {
+    switch (props.color) {
+      case "primary":
+        return css`
+          color: #fff;
+          background-color: ${color("primary", 600)};
+        `;
+      case "secondary":
+        return css`
+          color: ${color("primary", 700)};
+          background-color: ${color("primary", 50)};
+        `;
+      case "gray":
+        return css`
+          color: ${color("gray", 700)};
+          background-color: #fff;
+          border: solid 1px ${color("gray", 300)};
+        `;
+      case "empty":
+        return css`
+          color: ${color("primary", 700)};
+          background-color: #fff;
+        `;
+      case "empty gray":
+        return css`
+          color: ${color("gray", 500)};
+          background-color: #fff;
+        `;
+      case "error":
+        return css`
+          color: #fff;
+          background-color: ${color("error", 600)};
+        `;
+    }
+  }}
 `;
 
 export function Button({
