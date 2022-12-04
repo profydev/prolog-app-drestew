@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import { color, breakpoint } from "@styles/theme";
-import { version } from "package.json";
+import { version } from "../../../package.json";
 
 const FooterContainer = styled.footer`
   display: flex;
