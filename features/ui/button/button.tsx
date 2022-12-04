@@ -118,7 +118,6 @@ const StyledButton = styled.button<{
       switch (props.color) {
         case "primary":
           return css`
-            color: #fff;
             background-color: ${color("primary", 700)};
           `;
         case "secondary":
@@ -146,6 +145,45 @@ const StyledButton = styled.button<{
           return css`
             color: #fff;
             background-color: ${color("error", 700)};
+          `;
+      }
+    }} 
+    
+  &:focus {
+    position: relative;
+    top: -4px;
+    left: -4px;
+    ${(props) => {
+      switch (props.color) {
+        case "primary":
+          return css`
+            background-color: ${color("primary", 600)};
+            border: solid 4px ${color("primary", 100)};
+          `;
+        case "secondary":
+          return css`
+            color: ${color("primary", 700)};
+            border: solid 4px ${color("primary", 100)};
+          `;
+        case "gray":
+          return css`
+            color: ${color("gray", 700)};
+            border: solid 4px ${color("gray", 300)};
+            background-color: #fff;
+          `;
+        case "empty":
+          return css`
+            color: ${color("primary", 700)};
+          `;
+        case "empty gray":
+          return css`
+            color: ${color("gray", 500)};
+          `;
+        case "error":
+          return css`
+            color: #fff;
+            background-color: ${color("error", 600)};
+            border: solid 4px ${color("error", 100)};
           `;
       }
     }}
