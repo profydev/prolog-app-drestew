@@ -1,7 +1,6 @@
 import React from "react";
 import styled, { css } from "styled-components";
-import { color, textFont, space } from "@styles/theme";
-import { aquamarine } from "color-name";
+import { color, textFont } from "@styles/theme";
 
 export type ButtonSize = "small" | "medium" | "large" | "xlarge";
 export type ButtonColor =
@@ -71,7 +70,7 @@ const StyledButton = styled.button<{
         `;
       default:
         return css`
-          font-size: ${textFont("sm", "medium")};
+          font-size: ${textFont("md", "medium")};
           padding: 0.625rem 1rem;
         `;
     }
@@ -184,6 +183,40 @@ const StyledButton = styled.button<{
             color: #fff;
             background-color: ${color("error", 600)};
             border: solid 4px ${color("error", 100)};
+          `;
+      }
+    }}
+  }
+    
+  &:disabled {
+    ${(props) => {
+      switch (props.color) {
+        case "primary":
+          return css`
+            background-color: ${color("primary", 200)};
+          `;
+        case "secondary":
+          return css`
+            color: ${color("primary", 300)};
+            background-color: ${color("primary", 25)};
+          `;
+        case "gray":
+          return css`
+            color: ${color("gray", 300)};
+            border: solid 4px ${color("gray", 200)};
+            background-color: #fff;
+          `;
+        case "empty":
+          return css`
+            color: ${color("gray", 300)};
+          `;
+        case "empty gray":
+          return css`
+            color: ${color("gray", 300)};
+          `;
+        case "error":
+          return css`
+            background-color: ${color("error", 200)};
           `;
       }
     }}
