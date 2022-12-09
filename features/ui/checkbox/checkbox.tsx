@@ -1,46 +1,52 @@
 import React from "react";
 import styled, { css } from "styled-components";
-import { color, textFont } from "@styles/theme";
+import { color } from "@styles/theme";
 
 export type CheckboxSize = "small" | "medium";
-export type CheckboxChecked = boolean;
-export type CheckboxIndeterminate = boolean;
 
 type CheckboxProps = {
-  // children: React.ReactNode;
-  // onClick?: () => void;
-  // size?: CheckboxSize;
+  checkboxSize?: "small" | "medium";
   indeterminate?: boolean;
-  type?: string;
+  type: string;
   value?: string;
+  className?: string;
+  labelVisible?: boolean;
 };
 
 const Container = styled.div`
-  //display: flex;
-  //align-items: center;
-  //justify-content: center;
+  font-size: 1rem;
   display: grid;
-  grid-template-columns: 1em auto;
   gap: 0.5em;
   place-content: center;
+  grid-template-columns: 1em auto;
 `;
+
 const StyledCheckbox = styled.input<{
-  // children: React.ReactNode;
-  type?: string;
-  // size?: CheckboxSize;
-  indeterminate?: boolean;
-  value?: string;
+  checkboxSize?: CheckboxSize;
 }>`
   appearance: none;
   font: inherit;
-  width: 1.15em;
-  height: 1.15em;
-  border: 1px solid black;
+  border: 1px solid ${color("gray", 300)};
   border-radius: 0.15em;
   transform: translateY(-0.075em);
   color: black;
   display: grid;
   place-content: center;
+
+  ${(props) => {
+    switch (props.checkboxSize) {
+      case "small":
+        return css`
+          width: 0.875em;
+          height: 0.875em;
+        `;
+      case "medium":
+        return css`
+          width: 1em;
+          height: 1em;
+        `;
+    }
+  }};
 
   &::before {
     ${() => {
@@ -51,7 +57,6 @@ const StyledCheckbox = styled.input<{
         transform: scale(0);
         transition: 120ms transform ease-in-out;
         box-shadow: inset 1em 1em ${color("primary", 600)};
-        //background-color: ${color("primary", 600)}
 
         transform-origin: bottom left;
         clip-path: polygon(14% 44%, 0 65%, 50% 100%, 100% 16%, 80% 0%, 43% 62%);
@@ -63,39 +68,31 @@ const StyledCheckbox = styled.input<{
     ${() => {
       return css`
         transform: scale(1);
-        // content: "";
-        // width: 0.65em;
-        // height: 0.65em;
-        // transform: scale(0);
-        // transition: 120ms transform ease-in-out;
-        // box-shadow: inset 1em 1em ${color("primary", 600)};
       `;
     }}
-  }
-
-  &:focus {
-    outline: max(2px, 0.15em) solid red;
-    outline-offset: max(2px, 0.15em);
   }
 `;
 
 export function Checkbox({
-  value,
-  // size = "medium",
-  indeterminate = false,
+  value = "checkbox",
+  checkboxSize = "medium",
+  type = "checkbox",
+  className = "default",
+  labelVisible = true,
 }: CheckboxProps) {
   return (
     <Container>
       <StyledCheckbox
-        type="checkbox"
-        value="checkbox"
-        // size={size}
-        indeterminate={indeterminate}
-        className="default"
+        type={type}
+        value={value}
+        checkboxSize={checkboxSize}
+        className={className}
       />
-      <label htmlFor="checkbox" className="checkbox-label">
-        Label
-      </label>
+      {labelVisible && (
+        <label htmlFor="checkbox" className="checkbox-label">
+          Label
+        </label>
+      )}
     </Container>
   );
 }

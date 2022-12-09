@@ -9,10 +9,20 @@ export default {
 } as ComponentMeta<typeof Checkbox>;
 
 const Template: ComponentStory<typeof Checkbox> = (args) => (
-  <Checkbox indeterminate={args.indeterminate} />
+  <Checkbox type={args.type} checkboxSize={args.checkboxSize} />
 );
 
 export const Default = Template.bind({});
 Default.args = {
-  indeterminate: false,
+  ...Template.args,
+};
+
+export const Small = Template.bind({});
+Small.args = {
+  checkboxSize: "small",
+};
+
+export const Medium = Template.bind({});
+Medium.args = {
+  checkboxSize: "medium",
 };
