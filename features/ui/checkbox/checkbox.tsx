@@ -3,14 +3,14 @@ import styled, { css } from "styled-components";
 import { color } from "@styles/theme";
 
 export type CheckboxSize = "small" | "medium";
+export type Label = string;
 
 type CheckboxProps = {
-  checkboxSize?: "small" | "medium";
+  checkboxSize?: CheckboxSize;
+  label?: Label;
   indeterminate?: boolean;
   type: string;
-  value?: string;
   className?: string;
-  labelVisible?: boolean;
 };
 
 const Container = styled.div`
@@ -23,6 +23,7 @@ const Container = styled.div`
 
 const StyledCheckbox = styled.input<{
   checkboxSize?: CheckboxSize;
+  label?: Label;
 }>`
   appearance: none;
   font: inherit;
@@ -74,25 +75,19 @@ const StyledCheckbox = styled.input<{
 `;
 
 export function Checkbox({
-  value = "checkbox",
   checkboxSize = "medium",
   type = "checkbox",
   className = "default",
-  labelVisible = true,
+  label,
 }: CheckboxProps) {
   return (
     <Container>
       <StyledCheckbox
         type={type}
-        value={value}
         checkboxSize={checkboxSize}
         className={className}
       />
-      {labelVisible && (
-        <label htmlFor="checkbox" className="checkbox-label">
-          Label
-        </label>
-      )}
+      <label htmlFor="checkbox">{label}</label>
     </Container>
   );
 }

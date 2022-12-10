@@ -9,7 +9,11 @@ export default {
 } as ComponentMeta<typeof Checkbox>;
 
 const Template: ComponentStory<typeof Checkbox> = (args) => (
-  <Checkbox type={args.type} checkboxSize={args.checkboxSize} />
+  <Checkbox
+    type={args.type}
+    checkboxSize={args.checkboxSize}
+    label={args.label}
+  />
 );
 
 export const Default = Template.bind({});
@@ -25,4 +29,9 @@ Small.args = {
 export const Medium = Template.bind({});
 Medium.args = {
   checkboxSize: "medium",
+};
+
+export const Label = Template.bind({});
+Label.args = {
+  label: "Label",
 };
