@@ -11,6 +11,7 @@ type CheckboxProps = {
   type: string;
   className?: string;
   indeterminateForStorybook: boolean;
+  checked?: boolean;
 };
 
 const Container = styled.div`
@@ -90,6 +91,7 @@ export function Checkbox({
   type = "checkbox",
   className = "default",
   label,
+  checked,
   indeterminateForStorybook = false,
 }: CheckboxProps) {
   const ref = useRef<HTMLInputElement>(null);
@@ -109,7 +111,6 @@ export function Checkbox({
   window.addEventListener("load", () => {
     if (ref.current != null && indeterminateForStorybook) {
       ref.current.indeterminate = true;
-      console.log(ref.current, 2);
     }
   });
 
@@ -121,6 +122,7 @@ export function Checkbox({
         className={className}
         ref={ref}
         onChange={checkedStatus}
+        checked={checked}
       />
       <label htmlFor="checkbox">{label}</label>
     </Container>

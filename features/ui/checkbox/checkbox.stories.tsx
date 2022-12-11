@@ -14,6 +14,7 @@ const Template: ComponentStory<typeof Checkbox> = (args) => (
     checkboxSize={args.checkboxSize}
     label={args.label}
     indeterminateForStorybook={args.indeterminateForStorybook}
+    checked={args.checked}
   />
 );
 
@@ -40,4 +41,9 @@ Label.args = {
 export const Indeterminate = Template.bind({});
 Indeterminate.args = {
   indeterminateForStorybook: true,
+};
+
+export const Checked = Template.bind({});
+Checked.args = {
+  checked: true,
 };
