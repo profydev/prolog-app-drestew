@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useRef } from "react";
 import styled, { css } from "styled-components";
 import { color } from "@styles/theme";
 
@@ -8,9 +8,9 @@ export type Label = string;
 type CheckboxProps = {
   checkboxSize?: CheckboxSize;
   label?: Label;
-  indeterminate?: boolean;
   type: string;
   className?: string;
+  indeterminateForStorybook: boolean;
 };
 
 const Container = styled.div`
@@ -50,24 +50,35 @@ const StyledCheckbox = styled.input<{
   }};
 
   &::before {
-    ${() => {
-      return css`
-        content: "";
-        width: 0.65em;
-        height: 0.65em;
-        transform: scale(0);
-        transition: 120ms transform ease-in-out;
-        box-shadow: inset 1em 1em ${color("primary", 600)};
+    content: "";
+    width: 0.65em;
+    height: 0.65em;
+    transform: scale(0);
+    transition: 120ms transform ease-in-out;
+  }
 
-        transform-origin: bottom left;
-        clip-path: polygon(14% 44%, 0 65%, 50% 100%, 100% 16%, 80% 0%, 43% 62%);
-      `;
-    }}
+  &:checked,
+  &:indeterminate {
+    border-color: ${color("primary", 600)};
   }
 
   &:checked::before {
     ${() => {
       return css`
+        transform-origin: bottom left;
+        box-shadow: inset 1em 1em ${color("primary", 600)};
+        clip-path: polygon(14% 44%, 0 65%, 50% 100%, 100% 16%, 80% 0%, 43% 62%);
+        transform: scale(1);
+      `;
+    }}
+  }
+
+  &:indeterminate::before {
+    ${() => {
+      return css`
+        transform-origin: left;
+        box-shadow: inset 1em 1em ${color("primary", 600)};
+        clip-path: polygon(16% 45%, 86% 45%, 86% 65%, 16% 65%);
         transform: scale(1);
       `;
     }}
@@ -79,13 +90,37 @@ export function Checkbox({
   type = "checkbox",
   className = "default",
   label,
+  indeterminateForStorybook = false,
 }: CheckboxProps) {
+  const ref = useRef<HTMLInputElement>(null);
+  const [indeterminate, setIndeterminate] = useState(false);
+
+  const checkedStatus = function () {
+    if (ref.current != null && !ref.current.checked) {
+      ref.current.indeterminate = true;
+      setIndeterminate(() => true);
+    } else if (ref.current != null && ref.current.checked && indeterminate) {
+      ref.current.indeterminate = false;
+      ref.current.checked = false;
+      setIndeterminate(() => false);
+    }
+  };
+
+  window.addEventListener("load", () => {
+    if (ref.current != null && indeterminateForStorybook) {
+      ref.current.indeterminate = true;
+      console.log(ref.current, 2);
+    }
+  });
+
   return (
     <Container>
       <StyledCheckbox
         type={type}
         checkboxSize={checkboxSize}
         className={className}
+        ref={ref}
+        onChange={checkedStatus}
       />
       <label htmlFor="checkbox">{label}</label>
     </Container>
