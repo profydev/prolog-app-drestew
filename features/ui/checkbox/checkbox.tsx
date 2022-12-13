@@ -1,4 +1,4 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import styled, { css } from "styled-components";
 import { color } from "@styles/theme";
 
@@ -156,7 +156,7 @@ export function Checkbox({
     }
   };
 
-  window.addEventListener("load", () => {
+  useEffect(() => {
     if (ref.current != null && indeterminateForStorybook) {
       ref.current.indeterminate = true;
     }
