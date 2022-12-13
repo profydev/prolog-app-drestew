@@ -4,34 +4,47 @@ import { color } from "@styles/theme";
 
 export type CheckboxSize = "small" | "medium";
 export type Label = string;
+export type ClassName = string;
 
 type CheckboxProps = {
   checkboxSize?: CheckboxSize;
   label?: Label;
   type: string;
-  className?: string;
+  className?: ClassName;
   indeterminateForStorybook: boolean;
   checked?: boolean;
+  disabled?: boolean;
 };
 
-const Container = styled.div`
+const Container = styled.div<{ disabled: boolean }>`
   font-size: 1rem;
   display: grid;
   gap: 0.5em;
   place-content: center;
   grid-template-columns: 1em auto;
+  ${(props) => {
+    if (props.disabled) {
+      return css`
+        color: ${color("gray", 300)};
+      `;
+    } else {
+      return css`
+        color: black;
+      `;
+    }
+  }}
 `;
 
-const StyledCheckbox = styled.input<{
+const Input = styled.input<{
   checkboxSize?: CheckboxSize;
   label?: Label;
+  disabled?: boolean;
 }>`
   appearance: none;
   font: inherit;
   border: 1px solid ${color("gray", 300)};
   border-radius: 0.15em;
   transform: translateY(-0.075em);
-  color: black;
   display: grid;
   place-content: center;
 
@@ -49,7 +62,7 @@ const StyledCheckbox = styled.input<{
         `;
     }
   }};
-
+  
   &::before {
     content: "";
     width: 0.65em;
@@ -60,29 +73,63 @@ const StyledCheckbox = styled.input<{
 
   &:checked,
   &:indeterminate {
-    border-color: ${color("primary", 600)};
-  }
+    ${(props) => {
+      if (props.disabled) {
+        return css`
+          border-color: ${color("gray", 200)};
+        `;
+      } else {
+        return css`
+          border-color: ${color("primary", 600)};
+        `;
+      }
+    }}
 
   &:checked::before {
-    ${() => {
-      return css`
-        transform-origin: bottom left;
-        box-shadow: inset 1em 1em ${color("primary", 600)};
-        clip-path: polygon(14% 44%, 0 65%, 50% 100%, 100% 16%, 80% 0%, 43% 62%);
-        transform: scale(1);
-      `;
-    }}
-  }
+      ${(props) => {
+        if (props.disabled) {
+          return css`
+            transform-origin: bottom left;
+            box-shadow: inset 1em 1em ${color("gray", 200)};
+            clip-path: polygon(
+              14% 44%,
+              0 65%,
+              50% 100%,
+              100% 16%,
+              80% 0%,
+              43% 62%
+            );
+            transform: scale(1);
+            background-color: ${color("gray", 100)};
+          `;
+        } else {
+          return css`
+            transform-origin: bottom left;
+            box-shadow: inset 1em 1em ${color("primary", 600)};
+            clip-path: polygon(
+              14% 44%,
+              0 65%,
+              50% 100%,
+              100% 16%,
+              80% 0%,
+              43% 62%
+            );
+            transform: scale(1);
+          `;
+        }
+      }}
+    };
 
-  &:indeterminate::before {
-    ${() => {
-      return css`
-        transform-origin: left;
-        box-shadow: inset 1em 1em ${color("primary", 600)};
-        clip-path: polygon(16% 45%, 86% 45%, 86% 65%, 16% 65%);
-        transform: scale(1);
-      `;
-    }}
+    &:indeterminate::before {
+      transform-origin: left;
+      box-shadow: inset 1em 1em ${color("primary", 600)};
+      clip-path: polygon(16% 45%, 86% 45%, 86% 65%, 16% 65%);
+      transform: scale(1);
+    };
+    
+  &:disabled {
+    color: ${color("gray", 100)};
+    cursor: not-allowed;
   }
 `;
 
@@ -93,6 +140,7 @@ export function Checkbox({
   label,
   checked,
   indeterminateForStorybook = false,
+  disabled = false,
 }: CheckboxProps) {
   const ref = useRef<HTMLInputElement>(null);
   const [indeterminate, setIndeterminate] = useState(false);
@@ -115,14 +163,15 @@ export function Checkbox({
   });
 
   return (
-    <Container>
-      <StyledCheckbox
+    <Container disabled={disabled}>
+      <Input
         type={type}
         checkboxSize={checkboxSize}
         className={className}
         ref={ref}
         onChange={checkedStatus}
         checked={checked}
+        disabled={disabled}
       />
       <label htmlFor="checkbox">{label}</label>
     </Container>

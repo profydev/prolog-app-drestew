@@ -15,6 +15,7 @@ const Template: ComponentStory<typeof Checkbox> = (args) => (
     label={args.label}
     indeterminateForStorybook={args.indeterminateForStorybook}
     checked={args.checked}
+    disabled={args.disabled}
   />
 );
 
@@ -47,3 +48,24 @@ export const Checked = Template.bind({});
 Checked.args = {
   checked: true,
 };
+
+export const Disabled: ComponentStory<typeof Checkbox> = (args) => (
+  <div style={{ display: "flex", justifyContent: "center", gap: "1rem" }}>
+    <Checkbox
+      type={args.type}
+      checkboxSize={args.checkboxSize}
+      label="Label"
+      indeterminateForStorybook={args.indeterminateForStorybook}
+      checked={false}
+      disabled={true}
+    />
+    <Checkbox
+      type={args.type}
+      checkboxSize={args.checkboxSize}
+      label="Label"
+      indeterminateForStorybook={args.indeterminateForStorybook}
+      checked={true}
+      disabled={true}
+    />
+  </div>
+);
